@@ -1,0 +1,37 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.main-container {
+    height: 100vh;
+}
+.main-container_right {
+    display: flex;
+}
+.main-container_header {
+    padding-block: 20px;
+    font-size: 40px;
+    background-color: rgb(86, 201, 201);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-container_footer {
+    padding-block: 20px;
+    font-size: 25px;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-menu {
+    height: 100vh;
+    width: auto;
+}
+.main-content {
+    margin-left: 50px;
+    padding: 30px;
+    width: 100%;
+}
