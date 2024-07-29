@@ -7,14 +7,17 @@ const City = () => {
   const baseUrl = `https://autoapi.dezinfeksiyatashkent.uz/api/`;
   const baseImgUrl = `https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/`;
   const [cities, setCities] = useState([])
+  const [loading, setLoading] = useState(false);
 
   const getCities = () => {
+    setLoading(true);
     fetch(`${baseUrl}cities`, {
       method: "GET",
     })
       .then((resp) => resp.json())
       .then((data) => {
         if (data?.success) {
+          setLoading(false);
           setCities(data?.data);
           console.log(data?.data);
         }
@@ -27,7 +30,8 @@ const City = () => {
 
   return (
     <div>
-      <div className="container">
+      {
+        loading ? <div><h1 className='display-1'>Loading...</h1></div> : <div className="container">
         <div className="row">
           <div className="col-lg-12 d-flex justify-content-between">
             <p className='lead display-6'>Cities</p>
@@ -88,6 +92,7 @@ const City = () => {
           </div>
         </div>
       </div>
+      }
     </div>
   )
 }

@@ -5,16 +5,19 @@ import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
 
 const Brand = () => {
   const [brands, setBrands] = useState([]);
+  const [loading, setLoading] = useState(false);
   const baseUrl = `https://autoapi.dezinfeksiyatashkent.uz/api/`;
   const baseImgUrl = `https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/`;
 
   const getBrands = () => {
+    setLoading(true);
     fetch(`${baseUrl}brands`, {
       method: "GET",
     })
       .then((resp) => resp.json())
       .then((data) => {
         if (data?.success) {
+          setLoading(false);
           setBrands(data?.data);
           console.log(data?.data);
         }
@@ -27,14 +30,11 @@ const Brand = () => {
 
   return (
     <div>
-      <div className="container">
+      {
+        loading ? <div><h1 className="display-1">Loading...</h1></div> : <div className="container">
         <div className="row mb-4">
-          {/*  <div className="col-lg-12 d-flex justify-content-between">
-            <p className='lead display-5'>Brands</p>
-            <button className='btn btn-primary'>Add <PlusCircleFilled/></button>
-          </div> */}
           <div className="col-lg-12 d-flex justify-content-between">
-            <p className="display-6">Brands</p>
+            <p className="display-6 lead">Brands</p>
             <button className="btn btn-primary">
               Add {<PlusCircleFilled />}{" "}
             </button>
@@ -96,6 +96,7 @@ const Brand = () => {
           </div>
         </div>
       </div>
+      }
     </div>
   );
 };

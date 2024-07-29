@@ -5,6 +5,8 @@ import {
   CarOutlined,
   HomeOutlined,
   InfoOutlined,
+  MobileFilled,
+  MobileOutlined,
   MoneyCollectOutlined,
   PlayCircleOutlined,
   PoweroffOutlined,
@@ -19,20 +21,22 @@ import Cars from "./Pages/Cars/Cars";
 import Header from "./Pages/Header/Header";
 import Footer from "./Pages/Footer/Footer";
 import Home from "./Pages/Home/Home";
+import Model from "./Pages/Models/Model";
+import Login from "./Pages/Login/Login";
 function App() {
   const navigate = useNavigate();
   return (
     <>
       <div className="main-container">
         <div className="main-container_header">
-          <Header />
+          {/* <Header /> */}
         </div>
         <div className="main-container_right">
           <Menu
             className="main-menu"
             onClick={({ key }) => {
-              if (key === "signOut") {
-                //SIGN OUT
+              if (key === "logOut") {
+                navigate('/')
               } else {
                 navigate(key);
               }
@@ -40,7 +44,7 @@ function App() {
             items={[
               {
                 label: "Home",
-                key: "/",
+                key: "/homepage",
                 icon: <HomeOutlined />,
               },
               {
@@ -61,11 +65,15 @@ function App() {
               { label: "Locations", key: "/locations", icon: <InfoOutlined /> },
               { label: "Cars", key: "/cars", icon: <CarOutlined /> },
               {
+                label : "Models", key: "/models", icon: <MobileOutlined/>
+              },
+              {
                 label: "Log Out",
                 key: "logOut",
                 icon: <PoweroffOutlined />,
                 danger: true,
               },
+              
             ]}
           ></Menu>
           <Content />
@@ -82,12 +90,13 @@ const Content = () => {
   return (
     <div className="main-content">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/homepage" element={<Home />} />
         <Route path="/categories" element={<Category />} />
         <Route path="/brands" element={<Brands />} />
         <Route path="/cities" element={<Cities />} />
         <Route path="/locations" element={<Locations />} />
         <Route path="/cars" element={<Cars />} />
+        <Route path="/models" element={<Model/>}/>
       </Routes>
     </div>
   );

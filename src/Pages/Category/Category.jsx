@@ -5,10 +5,10 @@ import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
 
 const Category = () => {
-  const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNzkwYzBiNzktMWFkNy00NGM1LWE5ODMtMzUzMzMzNjZmOGU5IiwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTcyMTU3NTkxMSwiZXhwIjoxNzUzMTExOTExfQ.MdkDZcdFAndvUe1UdvIryXIEd3ABjpAiOAZEp3nhZSk`;
   const baseUrl = `https://autoapi.dezinfeksiyatashkent.uz/api/`;
   const baseImgUrl = `https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/`;
   const [category, setCategory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [addOpen, setAddOpen] = useState(false);
 
@@ -21,12 +21,14 @@ const Category = () => {
 
   //GET
   const getCategory = () => {
+    setLoading(true);
     fetch(`${baseUrl}categories`, {
       method: "GET",
     })
       .then((resp) => resp.json())
       .then((categ) => {
         if (categ?.success) {
+          setLoading(false);
           setCategory(categ?.data);
           console.log(categ?.data);
         }
@@ -47,7 +49,7 @@ const Category = () => {
       method: "POST",
       body: addFormData,
       headers: {
-        "Authorization" : `Bearer ${token}`
+        // "Authorization" : `Bearer ${token}`
       }
     })
     .then(resp => resp.json())
@@ -107,10 +109,11 @@ const Category = () => {
           </form>
         </div>
       </Modal>
-      <div className="container overflow-y-hidden">
+      {
+        loading ? <div><h1 className="display-1">Loading...</h1></div> : <div className="container overflow-y-hidden">
         <div className="row mb-4">
           <div className="col-lg-12 d-flex justify-content-between">
-            <div className="display-6">Categories</div>
+            <div className="display-6 lead">Categories</div>
             <button className="btn btn-primary" onClick={handleAddModalOpen}>
               Add {<PlusCircleFilled />}
             </button>
@@ -159,6 +162,7 @@ const Category = () => {
           </div>
         </div>
       </div>
+      }
     </div>
   );
 };
