@@ -312,7 +312,7 @@ const Cars = () => {
       .then((resp) => resp.json())
       .then((data) => {
         if (data?.success) {
-          console.log(data?.data);
+          console.log("Data", data?.data);
           getCars();
           alert(data?.message);
           handleEditModalClose();
