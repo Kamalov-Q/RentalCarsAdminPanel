@@ -270,8 +270,12 @@ const Cars = () => {
       locationInput: item?.location_id,
       inclusive: item?.inclusive,
       coverImg: item?.car_images[2]?.image?.src,
+
     });
+    console.log("rasm", item?.car_images[0]?.image?.src)
+
   };
+
 
   const editFormData = new FormData();
   editFormData.append("brand_id", data?.brandInput);
