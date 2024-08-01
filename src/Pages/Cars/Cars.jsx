@@ -36,7 +36,6 @@ const Cars = () => {
         if (data?.success) {
           setLoading(false);
           setCars(data?.data);
-          console.log("cars", data?.data);
         }
       });
   };
@@ -48,7 +47,6 @@ const Cars = () => {
       .then((data) => {
         if (data?.success) {
           setBrands(data?.data);
-          console.log("brands", data?.data);
         }
       });
   };
@@ -60,7 +58,6 @@ const Cars = () => {
       .then((data) => {
         if (data?.success) {
           setCategories(data?.data);
-          console.log("categories", data?.data);
         }
       });
   };
@@ -71,7 +68,6 @@ const Cars = () => {
       .then((resp) => resp.json())
       .then((data) => {
         if (data?.success) {
-          console.log("cities", data?.data);
           setCities(data?.data);
         }
       });
@@ -83,7 +79,6 @@ const Cars = () => {
       .then((resp) => resp.json())
       .then((data) => {
         if (data?.success) {
-          console.log("models", data?.data);
           setModels(data?.data);
         }
       });
@@ -95,7 +90,6 @@ const Cars = () => {
       .then((resp) => resp.json())
       .then((data) => {
         if (data?.success) {
-          console.log("locations", data?.data);
           setLocations(data?.data);
         }
       });
@@ -128,32 +122,6 @@ const Cars = () => {
   const [cityInput, setCityInput] = useState("");
   const [categoryInput, setCategoryInput] = useState("");
   const [locationInput, setLocationInput] = useState("");
-
-  /*  console.log("Brands", brandInput);
- console.log("Model", modelInput);
- console.log("City", cityInput);
- console.log("color", color);
- console.log("Year", year);
- console.log("Seconds", seconds);
- console.log("Category", categoryInput);
- console.log("Max_speed", maxSpeed);
- console.log("Max_people", maxPeople);
- console.log("Transmission", transmission);
- console.log("Motor", motor);
- console.log("Drive Side", driveSide);
- console.log("Petrol", petrol);
- console.log("Limit Per Day", limitPerDay);
- console.log("Deposit", deposit);
- console.log("Premium Price", premPrice);
- console.log("AED Price", aedPrice);
- console.log("USD Price", usdPrice);
- console.log("AED Sale", aedSale);
- console.log("USD Sale", usdSale);
- console.log("Location", locationInput);
- console.log("Images1", image1);
- console.log("Images2", image2);
- console.log("Cover Image", coverImg);
- console.log("Inclusive", inclusive); */
 
   const addFormData = new FormData();
   addFormData.append("brand_id", brandInput);
@@ -200,7 +168,7 @@ const Cars = () => {
         }
       })
       .catch((err) => {
-        console.error(err);
+        alert(err);
       });
   };
 
@@ -270,12 +238,8 @@ const Cars = () => {
       locationInput: item?.location_id,
       inclusive: item?.inclusive,
       coverImg: item?.car_images[2]?.image?.src,
-
     });
-    console.log("rasm", item?.car_images[0]?.image?.src)
-
   };
-
 
   const editFormData = new FormData();
   editFormData.append("brand_id", data?.brandInput);
@@ -316,7 +280,6 @@ const Cars = () => {
       .then((resp) => resp.json())
       .then((data) => {
         if (data?.success) {
-          console.log("Data", data?.data);
           getCars();
           alert(data?.message);
           handleEditModalClose();
@@ -413,7 +376,9 @@ const Cars = () => {
                       id="brand"
                       className="form-select"
                       value={data?.brandInput}
-                      onChange={(e) => setData({...data, brandInput: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, brandInput: e?.target?.value })
+                      }
                     >
                       {brands &&
                         brands?.map((item, index) => (
@@ -429,7 +394,9 @@ const Cars = () => {
                       id="model"
                       className="form-select"
                       value={data?.modelInput}
-                      onChange={(e) => setData({...data, modelInput: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, modelInput: e?.target?.value })
+                      }
                     >
                       {models &&
                         models?.map((item, index) => (
@@ -445,7 +412,9 @@ const Cars = () => {
                       id="city"
                       className="form-select"
                       value={data?.cityInput}
-                      onChange={(e) => setData({...data, cityInput: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, cityInput: e?.target?.value })
+                      }
                     >
                       {cities &&
                         cities?.map((item, index) => (
@@ -464,7 +433,9 @@ const Cars = () => {
                       className="form-control"
                       id="color"
                       value={data?.color}
-                      onChange={(e) => setData({...data, color: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, color: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -476,7 +447,9 @@ const Cars = () => {
                       className="form-control"
                       id="year"
                       value={data?.year}
-                      onChange={(e) => setData({...data, year: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, year: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -488,7 +461,9 @@ const Cars = () => {
                       className="form-control"
                       id="seconds"
                       value={data?.seconds}
-                      onChange={(e) => setData({...data, seconds: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, seconds: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -497,7 +472,9 @@ const Cars = () => {
                       id="category"
                       className="form-select"
                       value={data?.categoryInput}
-                      onChange={(e) => setData({...data, categoryInput: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, categoryInput: e?.target?.value })
+                      }
                     >
                       {categories &&
                         categories?.map((item, index) => (
@@ -515,7 +492,9 @@ const Cars = () => {
                       required
                       className="form-control"
                       value={data?.maxSpeed}
-                      onChange={(e) => setData({...data, maxSpeed: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, maxSpeed: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -527,7 +506,9 @@ const Cars = () => {
                       className="form-control"
                       id="people"
                       value={data?.maxPeople}
-                      onChange={(e) => setData({...data, maxPeople: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, maxPeople: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -539,7 +520,9 @@ const Cars = () => {
                       className="form-control"
                       id="transmission"
                       value={data?.transmission}
-                      onChange={(e) => setData({...data, transmission: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, transmission: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -551,7 +534,9 @@ const Cars = () => {
                       className="form-control"
                       id="motor"
                       value={data?.motor}
-                      onChange={(e) => setData({...data, motor: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, motor: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -563,7 +548,9 @@ const Cars = () => {
                       className="form-control"
                       id="driveSide"
                       value={data?.driveSide}
-                      onChange={(e) => setData({...data, driveSide: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, driveSide: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -575,7 +562,9 @@ const Cars = () => {
                       className="form-control"
                       id="petrol"
                       value={data?.petrol}
-                      onChange={(e) => setData({...data, petrol: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, petrol: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -587,7 +576,9 @@ const Cars = () => {
                       className="form-control"
                       id="limit"
                       value={data?.limitPerDay}
-                      onChange={(e) => setData({...data, limitPerDay: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, limitPerDay: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -599,7 +590,9 @@ const Cars = () => {
                       className="form-control"
                       id="deposit"
                       value={data?.deposit}
-                      onChange={(e) => setData({...data, deposit: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, deposit: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -611,7 +604,9 @@ const Cars = () => {
                       id="premPrice"
                       className="form-control"
                       value={data?.premPrice}
-                      onChange={(e) => setData({...data, premPrice: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, premPrice: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -623,7 +618,9 @@ const Cars = () => {
                       className="form-control"
                       id="aedPrice"
                       value={data?.aedPrice}
-                      onChange={(e) => setData({...data, aedPrice: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, aedPrice: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -635,7 +632,9 @@ const Cars = () => {
                       className="form-control"
                       id="usdPrice"
                       value={data?.usdPrice}
-                      onChange={(e) => setData({...data, usdPrice: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, usdPrice: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -647,7 +646,9 @@ const Cars = () => {
                       className="form-control"
                       id="aedSale"
                       value={data?.aedSale}
-                      onChange={(e) => setData({...data, aedSale: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, aedSale: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -659,7 +660,9 @@ const Cars = () => {
                       className="form-control"
                       id="usdSale"
                       value={data?.usdSale}
-                      onChange={(e) => setData({...data, usdSale: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, usdSale: e?.target?.value })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
@@ -668,7 +671,9 @@ const Cars = () => {
                       id="location"
                       className="form-select"
                       value={data?.locationInput}
-                      onChange={(e) => setData({...data, locationInput: e?.target?.value})}
+                      onChange={(e) =>
+                        setData({ ...data, locationInput: e?.target?.value })
+                      }
                     >
                       {locations &&
                         locations?.map((item, index) => (
@@ -685,7 +690,9 @@ const Cars = () => {
                       id="mainImg"
                       className="form-control"
                       required
-                      onChange={(e) => setData({...data, image1: e?.target?.files[0]})}
+                      onChange={(e) =>
+                        setData({ ...data, image1: e?.target?.files[0] })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-2">
@@ -696,7 +703,9 @@ const Cars = () => {
                       type="file"
                       className="form-control"
                       required
-                      onChange={(e) => setData({...data, image2: e?.target?.files[0]})}
+                      onChange={(e) =>
+                        setData({ ...data, image2: e?.target?.files[0] })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex flex-column gap-3">
@@ -706,7 +715,9 @@ const Cars = () => {
                       id="coverImg"
                       className="form-control"
                       required
-                      onChange={(e) => setData({...data, coverImg: e?.target?.files[0]})}
+                      onChange={(e) =>
+                        setData({ ...data, coverImg: e?.target?.files[0] })
+                      }
                     />
                   </div>
                   <div className="col-lg-4 p-2 d-flex gap-2">
@@ -717,7 +728,9 @@ const Cars = () => {
                       required
                       className="form-check"
                       value={data?.inclusive}
-                      onClick={() => setData({...data, inclusive: !inclusive})}
+                      onClick={() =>
+                        setData({ ...data, inclusive: !inclusive })
+                      }
                     />
                   </div>
                 </div>
