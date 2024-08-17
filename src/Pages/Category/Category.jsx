@@ -5,6 +5,7 @@ import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
 
 const Category = () => {
+  const token = localStorage.getItem("access_token");
   const baseUrl = `https://autoapi.dezinfeksiyatashkent.uz/api/`;
   const baseImgUrl = `https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/`;
   const [category, setCategory] = useState([]);
@@ -18,6 +19,20 @@ const Category = () => {
   const handleAddModaClose = () => {
     setAddOpen(false);
   };
+
+  const load = (
+    <div
+      style={{
+        height: "100dvh",
+        display: "flex",
+        flex: "1",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <h1 className="display-1">Loading...</h1>
+    </div>
+  );
 
   //GET
   const getCategory = () => {
@@ -40,26 +55,26 @@ const Category = () => {
   const [nameUz, setNameUz] = useState("");
   const [picture, setPicture] = useState(null);
   const addFormData = new FormData();
-  addFormData.append("name_en", nameEn);
   addFormData.append("name_uz", nameUz);
-  addFormData.append("images", picture)
+  addFormData.append("name_ru", nameEn);
+  addFormData.append("images", picture);
   const addCategory = (e) => {
     e.preventDefault();
     fetch(`${baseUrl}categories`, {
       method: "POST",
       body: addFormData,
       headers: {
-        // "Authorization" : `Bearer ${token}`
-      }
+        "Authorization" : `Bearer ${token}`
+      },
     })
-    .then(resp => resp.json())
-    .then(data => {
-      if(data?.success) {
-        getCategory();
-        alert(data?.message);
-        console.log(data?.data);
-      }
-    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data?.success) {
+          getCategory();
+          alert(data?.message);
+          console.log(data?.data);
+        }
+      });
   };
 
   useEffect(() => {
@@ -99,70 +114,95 @@ const Category = () => {
                   />
                 </div>
                 <div className="col-lg-12">
-                  <button className="btn btn-outline-primary mx-2" onClick={handleAddModaClose}>
+                  <button
+                    className="btn btn-outline-primary mx-2"
+                    onClick={handleAddModaClose}
+                  >
                     Cancel
                   </button>
-                  <button className="btn btn-primary" onClick={(e) => addCategory(e)}>Ok</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={(e) => addCategory(e)}
+                  >
+                    Ok
+                  </button>
                 </div>
               </div>
             </div>
           </form>
         </div>
       </Modal>
-      {
-        loading ? <div><h1 className="display-1">Loading...</h1></div> : <div className="container overflow-y-hidden">
-        <div className="row mb-4">
-          <div className="col-lg-12 d-flex justify-content-between">
-            <div className="display-6 lead">Categories</div>
-            <button className="btn btn-primary" onClick={handleAddModalOpen}>
-              Add {<PlusCircleFilled />}
-            </button>
+      {loading ? (
+        load
+      ) : (
+        <div className="container overflow-y-hidden">
+          <div className="row mb-4">
+            <div className="col-lg-12 d-flex justify-content-between">
+              <div className="display-6 lead">Categories</div>
+              <button className="btn btn-primary" onClick={handleAddModalOpen}>
+                Add {<PlusCircleFilled />}
+              </button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg-12">
+              <table className="table table-striped">
+                <thead>
+                  <tr>
+                    <th>N</th>
+                    <th>Image</th>
+                    <th>Name Eng</th>
+                    <th>Name Uzb</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {category &&
+                    category?.map((item, index) => (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <img
+                            src={`${baseImgUrl}${item?.image_src}`}
+                            alt={`${item?.name_uz}`}
+                            width={100}
+                            height={100}
+                          />
+                        </td>
+                        <td>
+                          <div>{item?.name_en}</div>
+                          <div className="mt-3">
+                            <span className="me-3">
+                              {item?.created_at.slice(
+                                0,
+                                item?.created_at.indexOf("T")
+                              )}
+                            </span>{" "}
+                            <span>
+                              {item?.created_at.slice(
+                                item?.created_at.indexOf("T") + 1,
+                                item?.created_at.indexOf(".")
+                              )}
+                            </span>
+                          </div>
+                        </td>
+                        <td>{item?.name_ru}</td>
+                        <td>
+                          <button className="btn btn-outline-primary mx-2">
+                            Edit <EditFilled />
+                          </button>
+                          <button className="btn btn-danger">
+                            Delete <DeleteFilled />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-lg-12">
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th>N</th>
-                  <th>Image</th>
-                  <th>Name Eng</th>
-                  <th>Name Uzb</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {category &&
-                  category?.map((item, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>
-                        <img
-                          src={`${baseImgUrl}${item?.image_src}`}
-                          alt={`${item?.name_uz}`}
-                          width={100}
-                          height={100}
-                        />
-                      </td>
-                      <td>
-                        <div>{item?.name_en}</div>
-                        <div className="mt-3"><span className="me-3">{item?.created_at.slice(0, item?.created_at.indexOf("T"))}</span> <span>{item?.created_at.slice(item?.created_at.indexOf("T")+1, item?.created_at.indexOf("."))}</span></div>
-                      </td>
-                      <td>{item?.name_ru}</td>
-                      <td>
-                        <button className="btn btn-outline-primary mx-2">
-                          Edit <EditFilled/>
-                        </button>
-                        <button className="btn btn-danger">Delete <DeleteFilled/></button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      }
+      )}
     </div>
   );
 };

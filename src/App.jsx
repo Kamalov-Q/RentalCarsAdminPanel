@@ -5,7 +5,6 @@ import {
   CarOutlined,
   HomeOutlined,
   InfoOutlined,
-  MobileFilled,
   MobileOutlined,
   MoneyCollectOutlined,
   PlayCircleOutlined,

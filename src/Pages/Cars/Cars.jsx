@@ -220,8 +220,8 @@ const Cars = () => {
       year: item?.year,
       seconds: item?.seconds,
       categoryInput: item?.category_id,
-      image1: item?.car_images[0]?.image?.src,
-      image2: item?.car_images[1]?.image?.src,
+      image1: image1,
+      image2: image2,
       maxSpeed: item?.max_speed,
       maxPeople: item?.max_people,
       transmission: item?.transmission,
@@ -237,7 +237,7 @@ const Cars = () => {
       usdSale: item?.price_in_usd_sale,
       locationInput: item?.location_id,
       inclusive: item?.inclusive,
-      coverImg: item?.car_images[2]?.image?.src,
+      coverImg: coverImg,
     });
   };
 
@@ -249,8 +249,12 @@ const Cars = () => {
   editFormData.append("year", data?.year);
   editFormData.append("seconds", data?.seconds);
   editFormData.append("category_id", data?.categoryInput);
-  editFormData.append("images", data?.image1);
-  editFormData.append("images", data?.image2);
+  if (image1) {
+    editFormData.append("images", data?.image1);
+  }
+  if (image2) {
+    editFormData.append("images", data?.image2);
+  }
   editFormData.append("max_speed", data?.maxSpeed);
   editFormData.append("max_people", data?.maxPeople);
   editFormData.append("transmission", data?.transmission);
@@ -266,7 +270,9 @@ const Cars = () => {
   editFormData.append("price_in_usd_sale", data?.usdSale);
   editFormData.append("location_id", data?.locationInput);
   editFormData.append("inclusive", data?.inclusive);
-  editFormData.append("cover", data?.coverImg);
+  if (coverImg) {
+    editFormData.append("cover", data?.coverImg);
+  }
 
   const handleEdit = (e) => {
     e.preventDefault();

@@ -6,15 +6,18 @@ import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./Pages/Login/Login.jsx";
 import Cars from "./Pages/Cars/Cars.jsx";
+import Brand from "./Pages/Brands/Brand.jsx";
+import Category from "./Pages/Category/Category.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
       <Routes>
         <Route path="/" element={<Login/>}/>
-        <Route path="/home" element={<Cars/>}/>
+        <Route path="/cars" element={<Cars/>}/>
+        <Route path="/home" element={<Brand/>}/>
+        <Route path="/categories" element={<Category/>}/>
       </Routes>
-      <Login />
     </Router>
   </React.StrictMode>
 );
