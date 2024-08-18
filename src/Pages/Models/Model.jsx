@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
 import "./Model.css";
@@ -7,6 +8,8 @@ const Model = () => {
   const baseImgUrl = `https://autoapi.dezinfeksiyatashkent.uz/api/uploads/images/`;
   const [model, setModel] = useState([]);
 
+
+  /* GET */
   const getModels = () => {
     fetch(`${baseUrl}models`, {
       method: "GET",

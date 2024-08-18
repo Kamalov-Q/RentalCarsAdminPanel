@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
+//Category edit is not completed yet!
 import { useEffect, useState } from "react";
 import "./Category.css";
 import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
@@ -35,7 +36,7 @@ const Category = () => {
     </div>
   );
 
-  //GET
+  /* GET METHOD */
   const getCategory = () => {
     setLoading(true);
     fetch(`${baseUrl}categories`, {
@@ -51,21 +52,24 @@ const Category = () => {
       });
   };
 
-  //POST
+  /* POST METHOD */
   const [nameEn, setNameEn] = useState("");
   const [nameUz, setNameUz] = useState("");
   const [picture, setPicture] = useState(null);
   const addFormData = new FormData();
   addFormData.append("name_uz", nameUz);
-  addFormData.append("name_ru", nameEn);
+  addFormData.append("name_en", nameEn);
   addFormData.append("images", picture);
+
+  const addForm = document.getElementById("addForm");
+
   const addCategory = (e) => {
     e.preventDefault();
     fetch(`${baseUrl}categories`, {
       method: "POST",
       body: addFormData,
       headers: {
-        "Authorization" : `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
       },
     })
       .then((resp) => resp.json())
@@ -73,8 +77,71 @@ const Category = () => {
         if (data?.success) {
           getCategory();
           alert(data?.message);
-          console.log(data?.data);
+          addForm.reset();
         }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert(err?.message);
+      });
+  };
+
+  /* PUT METHOD */
+  const [id, setId] = useState(false);
+  const [editData, setEditData] = useState({
+    name_uz: "",
+    name_en: "",
+    images: null,
+  });
+
+  const [editOpen, setEditOpen] = useState(false);
+  const handleEditOpen = () => {
+    setEditOpen(true);
+  };
+  const handleEditClose = () => {
+    setEditOpen(false);
+  };
+
+  const editCategories = (item) => {
+    handleEditOpen();
+    setId(item?.id);
+    console.log(item?.id);
+  };
+
+  /* DELETE METHOD */
+  const [delOpen, setDelOpen] = useState(false);
+  const handleDelOpen = () => {
+    setDelOpen(true);
+  };
+  const handleDelClose = () => {
+    setDelOpen(false);
+  };
+  const deleteCateg = (item) => {
+    handleDelOpen();
+    setId(item?.id);
+    console.log(item?.id);
+  };
+
+  const handleDelete = (e) => {
+    e?.preventDefault();
+    fetch(`${baseUrl}/categories/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data?.success) {
+          const newCategories = category?.filter((item, _) => item?.id !== id);
+          setCategory(newCategories);
+          handleDelClose();
+          alert(data?.message);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert(err?.message);
       });
   };
 
@@ -83,12 +150,76 @@ const Category = () => {
   }, []);
 
   return (
-    <div>
+    <div className="Category container">
+      {/* DELETE  */}
+      <Modal open={delOpen} onCancel={handleDelClose} footer={null}>
+        <div className="container p-3">
+          <p className="lead">Are you sure you want to delete?</p>
+          <div className="col-lg-12">
+            <button
+              className="btn btn-outline-primary mx-2"
+              onClick={handleDelClose}
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={(e) => handleDelete(e)}
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </Modal>
+      {/* PUT */}
+      <Modal open={editOpen} onCancel={handleEditClose} footer={null}>
+        <div className="container p-3">
+          <p className="lead">Edit Category</p>
+          <form>
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-12 d-flex flex-column">
+                  <input
+                    type="text"
+                    placeholder="Name Eng"
+                    onChange={(e) => setNameEn(e?.target?.value)}
+                    className="form-control p-2 mb-3"
+                    required
+                  />
+                  <input
+                    type="text"
+                    placeholder="Name Uzb"
+                    onChange={(e) => setNameUz(e?.target?.value)}
+                    className="form-control p-2 mb-3"
+                    required
+                  />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="form-control p-2 mb-3"
+                    onChange={(e) => setPicture(e?.target?.files[0])}
+                    required
+                  />
+                </div>
+                <div className="col-lg-12">
+                  <button
+                    className="btn btn-outline-primary mx-2"
+                    onClick={handleEditClose}
+                  >
+                    Cancel
+                  </button>
+                  <button className="btn btn-primary">Ok</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </Modal>
       {/* POST */}
       <Modal open={addOpen} onCancel={handleAddModaClose} footer={null}>
         <div className="container p-3">
           <p className="lead">Add Category</p>
-          <form onSubmit={(e) => addCategory(e)}>
+          <form onSubmit={(e) => addCategory(e)} id="addForm">
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 d-flex flex-column">
@@ -189,10 +320,16 @@ const Category = () => {
                         </td>
                         <td>{item?.name_ru}</td>
                         <td>
-                          <button className="btn btn-outline-primary mx-2">
+                          <button
+                            className="btn btn-outline-primary mx-2"
+                            onClick={() => editCategories(item)}
+                          >
                             Edit <EditFilled />
                           </button>
-                          <button className="btn btn-danger">
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => deleteCateg(item)}
+                          >
                             Delete <DeleteFilled />
                           </button>
                         </td>

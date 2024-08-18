@@ -82,11 +82,12 @@ const Brand = () => {
   /* PUT METHOD */
   const [id, setId] = useState();
 
-  const [editOpen, setEditOpen] = useState(false);
   const [editData, setEditData] = useState({
     title: "",
     images: null,
   });
+
+  const [editOpen, setEditOpen] = useState(false);
 
   const handleEditOpen = () => {
     setEditOpen(true);
@@ -104,9 +105,9 @@ const Brand = () => {
 
   const editDataForm = new FormData();
   editDataForm.append("title", editData?.title);
-  // if (editDataForm?.images) {
-  editDataForm.append("images", editDataForm?.images);
-  // }
+  if (editData?.images) {
+    editDataForm.append("images", editData?.images);
+  }
 
   const handleEdit = (e) => {
     e?.preventDefault();
@@ -136,7 +137,6 @@ const Brand = () => {
     handleDelOpen();
     setId(item?.id);
   };
-
   const handleDelete = () => {
     fetch(`${baseUrl}/brands/${id}`, {
       method: "DELETE",
@@ -201,7 +201,7 @@ const Brand = () => {
                     required
                   />
                   <img
-                    src={`${baseImgUrl}647ac710-4962-4ecf-9dad-6c29c521aa17.jpeg`}
+                    src={`${baseImgUrl}${brands[1]?.image_src}`}
                     width={150}
                     height={150}
                     alt={title}
@@ -210,10 +210,10 @@ const Brand = () => {
                     type="file"
                     accept="image/*"
                     className="form-control p-2 mb-3"
+                    required
                     onChange={(e) =>
                       setEditData({ ...editData, images: e?.target?.files[0] })
                     }
-                    required
                   />
                 </div>
                 <div className="col-lg-12">

@@ -1,11 +1,7 @@
-import './Header.css';
+import "./Header.css";
 
 const Header = () => {
-  return (
-    <div>
-      Eagle Rental Cars
-    </div>
-  )
-}
+  return <div>Eagle Rental Cars</div>;
+};
 
-export default Header
+export default Header;

@@ -1,13 +1,13 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 .main-container {
-    height: 100vh;
+  height: 100vh;
 }
 .main-container_right {
-    display: flex;
+  display: flex;
 }
 /* .main-container_header {
     padding-block: 20px;
@@ -19,19 +19,19 @@
     align-items: center;
 } */
 .main-container_footer {
-    padding-block: 20px;
-    font-size: 25px;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  padding-block: 20px;
+  font-size: 25px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .main-menu {
-    height: 100vh;
-    width: auto;
+  height: 100vh;
+  width: auto;
 }
 .main-content {
-    padding-top: 20px;
-    width: 100%;
-    overflow-x: auto;
+  padding-top: 20px;
+  width: 100%;
+  overflow-x: auto;
 }

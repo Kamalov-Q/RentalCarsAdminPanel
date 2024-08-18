@@ -27,15 +27,13 @@ function App() {
   return (
     <>
       <div className="main-container">
-        <div className="main-container_header">
-          {/* <Header /> */}
-        </div>
+        <div className="main-container_header"><Header /></div>
         <div className="main-container_right">
           <Menu
             className="main-menu"
             onClick={({ key }) => {
               if (key === "logOut") {
-                navigate('/')
+                navigate("/");
               } else {
                 navigate(key);
               }
@@ -64,7 +62,9 @@ function App() {
               { label: "Locations", key: "/locations", icon: <InfoOutlined /> },
               { label: "Cars", key: "/cars", icon: <CarOutlined /> },
               {
-                label : "Models", key: "/models", icon: <MobileOutlined/>
+                label: "Models",
+                key: "/models",
+                icon: <MobileOutlined />,
               },
               {
                 label: "Log Out",
@@ -72,14 +72,13 @@ function App() {
                 icon: <PoweroffOutlined />,
                 danger: true,
               },
-              
             ]}
           ></Menu>
           <Content />
         </div>
-        {/*   <div className="main-container_footer">
+          <div className="main-container_footer">
           <Footer />
-        </div> */}
+        </div>
       </div>
     </>
   );
@@ -95,7 +94,7 @@ const Content = () => {
         <Route path="/cities" element={<Cities />} />
         <Route path="/locations" element={<Locations />} />
         <Route path="/cars" element={<Cars />} />
-        <Route path="/models" element={<Model/>}/>
+        <Route path="/models" element={<Model />} />
       </Routes>
     </div>
   );

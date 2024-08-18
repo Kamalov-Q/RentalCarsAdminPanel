@@ -151,6 +151,8 @@ const Cars = () => {
   addFormData.append("inclusive", inclusive);
   addFormData.append("cover", coverImg);
 
+  const addForm = document.getElementById("addForm");
+
   const addCar = (e) => {
     e.preventDefault();
     fetch(`${baseUrl}cars`, {
@@ -164,6 +166,7 @@ const Cars = () => {
       .then((data) => {
         if (data?.success) {
           getCars();
+          addForm.reset();
           handleAddClose();
           alert(data?.message);
         }
@@ -772,7 +775,7 @@ const Cars = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <form action="" id="myForm">
+              <form onSubmit={(e) => addCar(e)} id="addForm">
                 <div className="row">
                   <div className="col-lg-4 p-2 d-flex flex-column gap-1">
                     <label htmlFor="brand">Brands</label>
@@ -1076,7 +1079,6 @@ const Cars = () => {
                     </button>
                     <button
                       className="btn btn-primary"
-                      onClick={(e) => addCar(e)}
                     >
                       Ok
                     </button>
