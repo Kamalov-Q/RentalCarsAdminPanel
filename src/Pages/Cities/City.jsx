@@ -169,25 +169,27 @@ const City = () => {
   return (
     /* DELETE */
     <div className="City container">
-      <Modal open={delOpen} onCancel={handleDelClose} footer={null}>
-        <div className="container p-3">
-          <p className="lead">Are you sure you want to delete?</p>
-          <div className="col-lg-12">
-            <button
-              className="btn btn-outline-primary mx-2"
-              onClick={handleDelClose}
-            >
-              Cancel
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={(e) => handleDelete(e)}
-            >
-              Ok
-            </button>
+      {
+        <Modal open={delOpen} onCancel={handleDelClose} footer={null}>
+          <div className="container p-3">
+            <p className="lead">Are you sure you want to delete?</p>
+            <div className="col-lg-12">
+              <button
+                className="btn btn-outline-primary mx-2"
+                onClick={handleDelClose}
+              >
+                Cancel
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={(e) => handleDelete(e)}
+              >
+                Ok
+              </button>
+            </div>
           </div>
-        </div>
-      </Modal>
+        </Modal>
+      }
       {/* PUT */}
       <Modal open={editOpen} onCancel={handleEditOpen} footer={null}>
         <div className="container p-3">

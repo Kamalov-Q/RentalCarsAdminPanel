@@ -784,6 +784,7 @@ const Cars = () => {
                       className="form-select"
                       onChange={(e) => setBrandInput(e?.target?.value)}
                     >
+                      <option value="" defaultValue={true}>Select Brands</option>
                       {brands &&
                         brands?.map((item, index) => (
                           <option value={item?.id} key={index}>
@@ -799,6 +800,7 @@ const Cars = () => {
                       className="form-select"
                       onChange={(e) => setModelInput(e?.target?.value)}
                     >
+                      <option value="" defaultValue={true}>Select model</option>
                       {models &&
                         models?.map((item, index) => (
                           <option value={item?.id} key={index}>
@@ -814,6 +816,7 @@ const Cars = () => {
                       className="form-select"
                       onChange={(e) => setCityInput(e?.target?.value)}
                     >
+                      <option value="" defaultValue={true}>Select city</option>
                       {cities &&
                         cities?.map((item, index) => (
                           <option value={item?.id} key={index}>
@@ -862,6 +865,7 @@ const Cars = () => {
                       className="form-select"
                       onChange={(e) => setCategoryInput(e?.target?.value)}
                     >
+                      <option value="" defaultValue={true}>Select category</option>
                       {categories &&
                         categories?.map((item, index) => (
                           <option value={item?.id} key={index}>
@@ -1019,6 +1023,7 @@ const Cars = () => {
                       className="form-select"
                       onChange={(e) => setLocationInput(e?.target?.value)}
                     >
+                      <option value="" defaultValue={true}>Select Location</option>
                       {locations &&
                         locations?.map((item, index) => (
                           <option value={item?.id} key={index}>
@@ -1091,9 +1096,17 @@ const Cars = () => {
       </Modal>
       {/* GET */}
       {loading ? (
-        <div>
-          <h1 className="display-1 lead">Loading...</h1>
-        </div>
+        <div
+        style={{
+          height: "100dvh",
+          display: "flex",
+          flex: "1",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <h1 className="display-1">Loading...</h1>
+      </div>
       ) : (
         <div className="container" style={{ overflowX: "auto" }}>
           <div className="row mb-4">

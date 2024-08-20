@@ -57,8 +57,8 @@ const Category = () => {
   const [nameUz, setNameUz] = useState("");
   const [picture, setPicture] = useState(null);
   const addFormData = new FormData();
-  addFormData.append("name_uz", nameUz);
   addFormData.append("name_en", nameEn);
+  addFormData.append("name_ru", nameUz);
   addFormData.append("images", picture);
 
   const addForm = document.getElementById("addForm");
@@ -69,7 +69,7 @@ const Category = () => {
       method: "POST",
       body: addFormData,
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((resp) => resp.json())
@@ -78,6 +78,7 @@ const Category = () => {
           getCategory();
           alert(data?.message);
           addForm.reset();
+          handleAddModaClose();
         }
       })
       .catch((err) => {
@@ -89,7 +90,7 @@ const Category = () => {
   /* PUT METHOD */
   const [id, setId] = useState(false);
   const [editData, setEditData] = useState({
-    name_uz: "",
+    name_ru: "",
     name_en: "",
     images: null,
   });
@@ -105,7 +106,37 @@ const Category = () => {
   const editCategories = (item) => {
     handleEditOpen();
     setId(item?.id);
-    console.log(item?.id);
+    setEditData({
+      name_en: item?.name_en,
+      name_ru: item?.name_ru,
+      images: item?.images,
+    });
+  };
+
+  const editFormData = new FormData();
+  editFormData.append("name_en", editData?.name_en);
+  editFormData.append("name_ru", editData?.name_ru);
+  if (editData?.images) {
+    editFormData.append("images", editData?.images);
+  }
+
+  const handleEdit = (e) => {
+    e?.preventDefault();
+    fetch(`${baseUrl}categories/${id}`, {
+      method: "PUT",
+      body: editFormData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data?.success) {
+          getCategory();
+          alert(data?.message);
+          handleEditClose();
+        }
+      });
   };
 
   /* DELETE METHOD */
@@ -119,7 +150,6 @@ const Category = () => {
   const deleteCateg = (item) => {
     handleDelOpen();
     setId(item?.id);
-    console.log(item?.id);
   };
 
   const handleDelete = (e) => {
@@ -175,21 +205,27 @@ const Category = () => {
       <Modal open={editOpen} onCancel={handleEditClose} footer={null}>
         <div className="container p-3">
           <p className="lead">Edit Category</p>
-          <form>
+          <form onSubmit={(e) => handleEdit(e)}>
             <div className="container">
               <div className="row">
                 <div className="col-lg-12 d-flex flex-column">
                   <input
                     type="text"
                     placeholder="Name Eng"
-                    onChange={(e) => setNameEn(e?.target?.value)}
+                    value={editData?.name_en}
+                    onChange={(e) =>
+                      setEditData({ ...editData, name_en: e?.target?.value })
+                    }
                     className="form-control p-2 mb-3"
                     required
                   />
                   <input
                     type="text"
                     placeholder="Name Uzb"
-                    onChange={(e) => setNameUz(e?.target?.value)}
+                    value={editData?.name_ru}
+                    onChange={(e) =>
+                      setEditData({ ...editData, name_ru: e?.target?.value })
+                    }
                     className="form-control p-2 mb-3"
                     required
                   />
@@ -197,8 +233,9 @@ const Category = () => {
                     type="file"
                     accept="image/*"
                     className="form-control p-2 mb-3"
-                    onChange={(e) => setPicture(e?.target?.files[0])}
-                    required
+                    onChange={(e) =>
+                      setEditData({ ...editData, images: e?.target?.files[0] })
+                    }
                   />
                 </div>
                 <div className="col-lg-12">
