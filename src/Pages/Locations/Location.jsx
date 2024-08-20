@@ -4,6 +4,7 @@ import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
 import "./Location.css";
 import { Modal } from "antd";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const Location = () => {
   const token = localStorage.getItem("access_token");
@@ -24,7 +25,6 @@ const Location = () => {
         if (data?.success) {
           setLoading(false);
           setLocation(data?.data);
-          console.log(data?.data);
         }
       });
   };
@@ -61,7 +61,7 @@ const Location = () => {
         if (data?.success) {
           getLocation();
           addForm.reset();
-          alert(data?.message);
+          toast.success(data?.message);
           handleAddClose();
         }
       });
@@ -111,13 +111,13 @@ const Location = () => {
     .then((data) => {
       if(data?.success) {
         getLocation();
-        alert(data?.message);
+        toast.success(data?.message);
         handleEditClose();
       }
     })
     .catch((err) => {
       console.error(err);
-      alert(err?.message);
+      toast.error(err?.message);
     })
   }
 
@@ -150,12 +150,12 @@ const Location = () => {
           const newLocations = location?.filter((item, _) => item?.id !== id);
           setLocation(newLocations);
           handleDelClose();
-          alert(data?.message);
+          toast.success(data?.message);
         }
       })
       .catch((err) => {
         console.error(err);
-        alert(err?.message);
+        toast.error(err?.message);
       });
   };
 

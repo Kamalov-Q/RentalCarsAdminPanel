@@ -21,20 +21,42 @@ import Cars from "./Pages/Cars/Cars";
 // import Footer from "./Pages/Footer/Footer";
 import Home from "./Pages/Home/Home";
 import Modell from "./Pages/Models/Model";
+import { useEffect, useState } from "react";
+import { Input, QRCode, Space } from "antd";
+import { toast } from "react-toastify";
 
 // import Login from "./Pages/Login/Login";
 function App() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (navigator?.onLine) {
+      toast?.info("You are welcome!");
+    }
+  }, []);
+  const [text, setText] = useState("");
+
   return (
     <>
       <div className="main-container">
+        <div>
+          <Space direction="vertical" align="center">
+            <QRCode value={text || "-"} />
+            <Input
+              placeholder="-"
+              maxLength={60}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+          </Space>
+        </div>
         <div className="main-container_right">
           <Menu
             className="main-menu"
             onClick={({ key }) => {
               if (key === "logOut") {
                 localStorage.removeItem("access_token");
-                <Navigate to={'/'}/>
+                <Navigate to={"/"} />;
               } else {
                 navigate(key);
               }
@@ -77,14 +99,11 @@ function App() {
           ></Menu>
           <Content />
         </div>
-          <div className="main-container_footer">
-          {/* <Footer /> */}
-        </div>
+        <div className="main-container_footer">{/* <Footer /> */}</div>
       </div>
     </>
   );
 }
-
 
 export const Content = () => {
   return (
@@ -96,7 +115,7 @@ export const Content = () => {
         <Route path="/cities" element={<Cities />} />
         <Route path="/locations" element={<Locations />} />
         <Route path="/cars" element={<Cars />} />
-        <Route path="/models" element={<Modell/>}/>
+        <Route path="/models" element={<Modell />} />
       </Routes>
     </div>
   );

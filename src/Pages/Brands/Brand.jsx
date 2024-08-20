@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import "./Brand.css";
 import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
+import { toast } from "react-toastify";
 
 const Brand = () => {
   const token = localStorage.getItem("access_token");
@@ -46,7 +47,6 @@ const Brand = () => {
         if (data?.success) {
           setLoading(false);
           setBrands(data?.data);
-          // console.log("brand", data?.data);
         }
       });
   };
@@ -69,12 +69,13 @@ const Brand = () => {
       .then((data) => {
         if (data?.success) {
           getBrands();
-          alert(data?.message);
+          toast.success(data?.message);
           addForm.reset();
           handleAddClose();
         }
       })
       .catch((err) => {
+        toast.error(err?.message)
         console.error(err);
       });
   };
@@ -99,7 +100,6 @@ const Brand = () => {
   const editBrands = (item) => {
     handleEditOpen();
     setId(item?.id);
-    console.log("Image", brands?.image_src);
     setEditData({ title: item?.title, images: item?.images });
   };
 
@@ -122,13 +122,13 @@ const Brand = () => {
       .then((data) => {
         if (data?.success) {
           getBrands();
-          alert(data?.message);
+          toast.success(data?.message);
           handleEditClose();
         }
       })
       .catch((err) => {
         console.error(err);
-        alert(err?.message);
+        toast.error(err?.message);
       });
   };
 
@@ -149,13 +149,13 @@ const Brand = () => {
         if (data?.success) {
           const newBrands = brands?.filter((item, _) => item?.id !== id);
           setBrands(newBrands);
-          alert(data?.message);
+          toast.success(data?.message);
           handleDelClose();
         }
       })
       .catch((err) => {
         console.error(err);
-        alert(err?.message);
+        toast.error(err?.message);
       });
   };
 

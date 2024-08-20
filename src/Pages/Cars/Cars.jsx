@@ -4,6 +4,7 @@ import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
 import "./Cars.css";
 import { useEffect, useState } from "react";
 import { Modal } from "antd";
+import { toast } from "react-toastify";
 
 const Cars = () => {
   const token = localStorage.getItem("access_token");
@@ -168,7 +169,7 @@ const Cars = () => {
           getCars();
           addForm.reset();
           handleAddClose();
-          alert(data?.message);
+          toast.success(data?.message);
         }
       })
       .catch((err) => {
@@ -291,7 +292,7 @@ const Cars = () => {
       .then((data) => {
         if (data?.success) {
           getCars();
-          alert(data?.message);
+          toast.success(data?.message);
           handleEditModalClose();
         }
       });
@@ -324,7 +325,7 @@ const Cars = () => {
         if (data?.success) {
           const newCars = cars?.filter((item, _) => item?.id !== id);
           setCars(newCars);
-          alert(data?.message);
+          toast.success(data?.message);
           handleDeleteClose();
         }
       });

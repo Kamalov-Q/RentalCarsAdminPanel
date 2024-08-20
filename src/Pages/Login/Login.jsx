@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const baseUrl = `https://autoapi.dezinfeksiyatashkent.uz/api/`;
@@ -30,12 +31,12 @@ const Login = () => {
             "access_token",
             data?.data?.tokens?.accessToken?.token
           );
-          alert(data?.message);
+          toast.success(data?.message);
           navigate("/home");
         }
       })
       .catch((err) => {
-        alert("Error : ", err);
+        toast.error("Error : ", err);
         console.error("Error : ", err);
         navigate("/");
       });

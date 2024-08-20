@@ -4,6 +4,7 @@ import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
 import "./Model.css";
 import { useEffect, useState } from "react";
 import { Modal } from "antd";
+import { toast } from "react-toastify";
 const Modell = () => {
   const token = localStorage.getItem("access_token");
   const [loading, setLoading] = useState(false);
@@ -49,7 +50,7 @@ const Modell = () => {
       })
       .catch((err) => {
         console.error(err);
-        alert(err?.message);
+        toast.error(err?.message);
       });
   };
   const [name, setName] = useState("");
@@ -75,9 +76,13 @@ const Modell = () => {
         if (data?.success) {
           getModels();
           addForm.reset();
-          alert(data?.message);
+          toast.success(data?.message);
           handleAddClose();
         }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error(err?.message);
       });
   };
 
@@ -117,13 +122,13 @@ const Modell = () => {
       .then((data) => {
         if (data?.success) {
           getModels();
-          alert(data?.message);
+          toast.success(data?.message);
           handleEditClose();
         }
       })
       .catch((err) => {
         console.error(err);
-        alert(err?.message);
+        toast.error(err?.message);
       });
   };
 
@@ -137,7 +142,6 @@ const Modell = () => {
   };
   const deleteModels = (item) => {
     handleDelOpen();
-    console.log(item?.id);
     setId(item?.id);
   };
 
@@ -153,13 +157,13 @@ const Modell = () => {
         if (data?.success) {
           const newModels = model?.filter((item, _) => item?.id !== id);
           setModel(newModels);
-          alert(data?.message);
+          toast.success(data?.message);
           handleDelClose();
         }
       })
       .catch((err) => {
         console.error(err);
-        alert(err?.message);
+        toast.error(err?.message);
       });
   };
 

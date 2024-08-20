@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import "./Category.css";
 import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
+import { toast } from "react-toastify";
 
 const Category = () => {
   const token = localStorage.getItem("access_token");
@@ -47,7 +48,6 @@ const Category = () => {
         if (categ?.success) {
           setLoading(false);
           setCategory(categ?.data);
-          console.log(categ?.data);
         }
       });
   };
@@ -76,14 +76,14 @@ const Category = () => {
       .then((data) => {
         if (data?.success) {
           getCategory();
-          alert(data?.message);
+          toast.success(data?.message);
           addForm.reset();
           handleAddModaClose();
         }
       })
       .catch((err) => {
         console.error(err);
-        alert(err?.message);
+        toast.error(err?.message);
       });
   };
 
@@ -133,9 +133,13 @@ const Category = () => {
       .then((data) => {
         if (data?.success) {
           getCategory();
-          alert(data?.message);
+          toast.success(data?.message);
           handleEditClose();
         }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error(err?.message);
       });
   };
 
@@ -166,12 +170,12 @@ const Category = () => {
           const newCategories = category?.filter((item, _) => item?.id !== id);
           setCategory(newCategories);
           handleDelClose();
-          alert(data?.message);
+          toast?.success(data?.message);
         }
       })
       .catch((err) => {
         console.error(err);
-        alert(err?.message);
+        toast.error(err?.message);
       });
   };
 

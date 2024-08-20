@@ -30,6 +30,8 @@ import {
   PoweroffOutlined,
 } from "@ant-design/icons";
  */
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
@@ -92,6 +94,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/models" element={<Model/>}/>
         <Route path="/home" element={<App />} />
       </Routes>
+      <ToastContainer/>
     </Router>
   </React.StrictMode>
 );

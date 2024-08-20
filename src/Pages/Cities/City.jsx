@@ -4,6 +4,7 @@ import { DeleteFilled, EditFilled, PlusCircleFilled } from "@ant-design/icons";
 import "./City.css";
 import { useEffect, useState } from "react";
 import { Modal } from "antd";
+import { toast } from "react-toastify";
 
 const City = () => {
   const token = localStorage.getItem("access_token");
@@ -23,7 +24,6 @@ const City = () => {
         if (data?.success) {
           setLoading(false);
           setCities(data?.data);
-          console.log(data?.data);
         }
       });
   };
@@ -61,14 +61,14 @@ const City = () => {
       .then((data) => {
         if (data?.success) {
           getCities();
-          alert(data?.message);
+          toast.success(data?.message);
           addForm.reset();
           handleAddClose();
         }
       })
       .catch((err) => {
         console.error(err);
-        alert(err?.message);
+        toast.error(err?.message);
       });
   };
 
@@ -90,7 +90,6 @@ const City = () => {
 
   const editCities = (item) => {
     handleEditOpen();
-    console.log(item?.id);
     setId(item?.id);
     setEditData({ name: item?.name, text: item?.text, images: item?.images });
   };
@@ -118,13 +117,13 @@ const City = () => {
         if (data?.success) {
           getCities();
           editForm.reset();
-          alert(data?.message);
+          toast.success(data?.message);
           handleEditClose();
         }
       })
       .catch((err) => {
         console.error(err);
-        alert(err?.message);
+        toast.error(err?.message);
       });
   };
 
@@ -156,9 +155,13 @@ const City = () => {
         if (data?.success) {
           const newCities = cities?.filter((item, _) => item?.id !== id);
           setCities(newCities);
-          alert(data?.message);
+          toast.success(data?.message);
           handleDelClose();
         }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error(err?.message);
       });
   };
 
